@@ -16,16 +16,19 @@ const ThemeToggle: React.FC = () => {
 
   return (
     <Tooltip title={`${t("theme")}: ${t(isLight ? "light" : "dark")}`}>
-      <IconButton
-        color="primary"
-        onClick={() => setMode(next)}
-        aria-label="toggle theme"
-        component={motion.button}
+      <motion.div
         whileTap={{ scale: 0.95 }}
         whileHover={{ scale: 1.05 }}
+        style={{ display: "inline-block" }}
       >
-        {isLight ? <LightModeRounded /> : <DarkModeRounded />}
-      </IconButton>
+        <IconButton
+          color="primary"
+          onClick={() => setMode(next)}
+          aria-label="toggle theme"
+        >
+          {isLight ? <LightModeRounded /> : <DarkModeRounded />}
+        </IconButton>
+      </motion.div>
     </Tooltip>
   );
 };

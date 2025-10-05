@@ -39,13 +39,13 @@ const DashboardPage: React.FC = () => {
 
       {loading && (
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <WeatherSkeleton />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <WeatherSkeleton />
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <WeatherSkeleton />
           </Grid>
         </Grid>
@@ -53,13 +53,13 @@ const DashboardPage: React.FC = () => {
 
       {!loading && !error && current && forecast && (
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <WeatherCard data={current} />
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <TemperatureChart forecast={forecast} />
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <ForecastList forecast={forecast} />
           </Grid>
         </Grid>

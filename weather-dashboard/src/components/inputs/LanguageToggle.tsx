@@ -12,15 +12,15 @@ const LanguageToggle: React.FC = () => {
   };
 
   return (
-    <motion.div layout>
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+    >
       <ToggleButtonGroup
         value={i18n.language}
         exclusive
         onChange={(_, val) => val && i18n.changeLanguage(val)}
-        component={motion.div}
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
       >
         <ToggleButton value="en">EN</ToggleButton>
         <ToggleButton value="fa">فا</ToggleButton>

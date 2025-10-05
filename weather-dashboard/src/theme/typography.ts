@@ -1,6 +1,6 @@
-import type { TypographyOptions } from "@mui/material/styles/createTypography";
+import type { ThemeOptions } from "@mui/material/styles";
 
-export const typography: TypographyOptions = {
+export const typography: ThemeOptions["typography"] = {
   fontFamily: `'Inter', 'IRANSans', system-ui, -apple-system, Segoe UI, Roboto, Arial, 'Noto Sans', sans-serif`,
   h1: { fontWeight: 700, letterSpacing: "-0.02em" },
   h2: { fontWeight: 700, letterSpacing: "-0.02em" },

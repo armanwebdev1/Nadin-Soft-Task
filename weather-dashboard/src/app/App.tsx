@@ -43,7 +43,7 @@ export default function App() {
   ]);
 
   return (
-    <CacheProvider value={dir === "rtl" ? rtlCache : undefined}>
+    <CacheProvider value={dir === "rtl" ? rtlCache : createCache({ key: "mui" })}>
       <ThemeProvider theme={buildTheme("light", dir)}>
         <CssBaseline />
         <Box dir={dir}>
