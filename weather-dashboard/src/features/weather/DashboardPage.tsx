@@ -1,70 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
+import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import { motion } from "framer-motion";
+
 import WeatherCard from "./components/WeatherCard";
 import ForecastList from "./components/ForecastList";
 import TemperatureChart from "./components/TemperatureChart";
-import LoadingState from "../../components/feedback/LoadingState";
-import ErrorState from "../../components/feedback/ErrorState";
-import { useWeather } from "./useWeather";
-import { useTranslation } from "react-i18next";
-import WeatherSkeleton from "../../components/feedback/WeatherSkeleton";
+import { useWeatherData } from "./hooks/useWeatherData";
+import LoadingState from "@components/feedback/LoadingState";
+import ErrorState from "@components/feedback/ErrorState";
 
 const DashboardPage: React.FC = () => {
-  const { t, i18n } = useTranslation("weather");
-  const [city, setCity] = useState("San Francisco");
-  const { current, forecast, loading, error } = useWeather(city, i18n.language);
+  const { weather, forecast, loading, error } = useWeatherData();
+
+  if (loading) return <LoadingState />;
+  if (error) return <ErrorState message="Unable to load weather data." />;
 
   return (
-    <Stack
-      component={motion.div}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.6 }}
-      spacing={4}
-    >
-      <TextField
-        label={t("searchPlace")}
-        value={city}
-        onChange={(e) => setCity(e.target.value)}
-        fullWidth
-      />
-
-      {loading && <LoadingState />}
-      {error && <ErrorState message={error} onRetry={() => setCity(city)} />}
-
-      {loading && (
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <WeatherSkeleton />
-          </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <WeatherSkeleton />
-          </Grid>
-          <Grid size={{ xs: 12 }}>
-            <WeatherSkeleton />
-          </Grid>
+    <Container sx={{ py: 4 }}>
+      <Grid container spacing={3}>
+        <Grid size={{ xs: 12, md: 4 }}>
+          <WeatherCard weather={weather} />
         </Grid>
-      )}
-
-      {!loading && !error && current && forecast && (
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <WeatherCard data={current} />
-          </Grid>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <TemperatureChart forecast={forecast} />
-          </Grid>
-          <Grid size={{ xs: 12 }}>
-            <ForecastList forecast={forecast} />
-          </Grid>
+        <Grid size={{ xs: 12, md: 4 }}>
+          <ForecastList forecast={forecast} />
         </Grid>
-      )}
-    </Stack>
+        <Grid size={{ xs: 12, md: 4 }}>
+          <TemperatureChart forecast={forecast} />
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 

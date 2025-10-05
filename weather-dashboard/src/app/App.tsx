@@ -1,24 +1,22 @@
 import React, { Suspense } from "react";
-import { useLocation, useRoutes, Navigate } from "react-router-dom";
-import AppLayout from "../components/layout/AppLayout";
+import { useLocation, useRoutes } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import LoadingState from "../components/feedback/LoadingState";
-import DashboardPage from "../features/weather/DashboardPage";
-import LoginPage from "../features/auth/LoginPage";
-
-// i18n + RTL support
-import { useTranslation } from "react-i18next";
+import {
+  Box,
+  CssBaseline,
+  ThemeProvider as MUIThemeProvider,
+} from "@mui/material";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
 import rtlPlugin from "stylis-plugin-rtl";
-import { ThemeProvider, CssBaseline, Box } from "@mui/material";
-import { buildTheme } from "../theme";
 
-const rtlCache = createCache({
-  key: "mui-rtl",
-  stylisPlugins: [prefixer, rtlPlugin],
-});
+import { routes } from "@app/routes";
+import AppLayout from "@components/layout/AppLayout";
+import LoadingState from "@components/feedback/LoadingState";
+import { buildTheme } from "@theme/index";
+import { useThemeCtx } from "@providers/ThemeProvider";
+import { useTranslation } from "react-i18next";
 
 const PageTransition: React.FC<React.PropsWithChildren> = ({ children }) => (
   <motion.div
@@ -33,20 +31,21 @@ const PageTransition: React.FC<React.PropsWithChildren> = ({ children }) => (
 
 export default function App() {
   const location = useLocation();
-  const { i18n } = useTranslation();
-  const dir = i18n.language === "fa" ? "rtl" : "ltr";
+  const element = useRoutes(routes);
 
-  const element = useRoutes([
-    { path: "/", element: <DashboardPageWrapper /> },
-    { path: "/login", element: <LoginPageWrapper /> },
-    { path: "*", element: <Navigate to="/" replace /> },
-  ]);
+  const { mode, direction } = useThemeCtx();
+  const { i18n } = useTranslation();
+
+  const cache = createCache({
+    key: direction === "rtl" ? "mui-rtl" : "mui",
+    stylisPlugins: direction === "rtl" ? [prefixer, rtlPlugin] : [prefixer],
+  });
 
   return (
-    <CacheProvider value={dir === "rtl" ? rtlCache : createCache({ key: "mui" })}>
-      <ThemeProvider theme={buildTheme("light", dir)}>
+    <CacheProvider value={cache}>
+      <MUIThemeProvider theme={buildTheme(mode, direction)}>
         <CssBaseline />
-        <Box dir={dir}>
+        <Box dir={direction}>
           <AppLayout>
             <Suspense fallback={<LoadingState />}>
               <AnimatePresence mode="wait">
@@ -57,35 +56,7 @@ export default function App() {
             </Suspense>
           </AppLayout>
         </Box>
-      </ThemeProvider>
+      </MUIThemeProvider>
     </CacheProvider>
-  );
-}
-
-function DashboardPageWrapper() {
-  const { i18n } = useTranslation();
-  return (
-    <motion.div
-      key={i18n.language}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.4 }}
-    >
-      <DashboardPage />
-    </motion.div>
-  );
-}
-
-function LoginPageWrapper() {
-  const { i18n } = useTranslation();
-  return (
-    <motion.div
-      key={i18n.language}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.4 }}
-    >
-      <LoginPage />
-    </motion.div>
   );
 }

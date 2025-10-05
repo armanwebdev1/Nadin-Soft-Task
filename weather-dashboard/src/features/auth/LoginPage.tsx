@@ -1,4 +1,3 @@
-// src/features/auth/LoginPage.tsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -8,7 +7,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { motion } from "framer-motion";
-import { useAuth } from "./useAuth";
+import { useAuth } from "./AuthProvider";
 
 const LoginPage: React.FC = () => {
   const { t } = useTranslation("auth");

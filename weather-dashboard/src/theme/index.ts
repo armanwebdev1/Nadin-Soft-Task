@@ -1,26 +1,22 @@
 import { createTheme } from "@mui/material/styles";
-import { darkPalette, lightPalette } from "./palette";
-import { typography } from "./typography";
+import { buildPalette } from "./palette";
 
-export type ColorMode = "light" | "dark";
-export const buildTheme = (mode: ColorMode, direction: "ltr" | "rtl") =>
+export const buildTheme = (mode: "light" | "dark", direction: "ltr" | "rtl") =>
   createTheme({
-    palette: mode === "light" ? lightPalette : darkPalette,
-    typography,
-    shape: { borderRadius: 14 },
     direction,
+    palette: buildPalette(mode),
+    shape: { borderRadius: 16 },
+    typography: {
+      h2: { fontSize: "3rem", fontWeight: 700 },
+      h6: { fontWeight: 600 },
+      body2: { color: "inherit" },
+    },
     components: {
-      MuiButton: {
-        styleOverrides: {
-          root: { textTransform: "none", borderRadius: 12 },
-        },
-      },
       MuiPaper: {
-        defaultProps: { elevation: 0 },
-      },
-      MuiCard: {
         styleOverrides: {
-          root: { backdropFilter: "saturate(1.2) blur(8px)" },
+          root: {
+            boxShadow: "0 8px 30px rgba(0,0,0,0.06)",
+          },
         },
       },
     },
