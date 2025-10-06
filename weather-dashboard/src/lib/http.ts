@@ -1,14 +1,11 @@
 import axios from "axios";
-import { OPEN_WEATHER_BASE_URL } from "../utils/constants";
 
 export const http = axios.create({
-  baseURL: OPEN_WEATHER_BASE_URL,
+  baseURL: "https://api.openweathermap.org/data/2.5",
   timeout: 10000,
 });
 
 http.interceptors.response.use(
   (res) => res,
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );

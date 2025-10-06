@@ -1,22 +1,13 @@
-import React, { Suspense } from "react";
+import type React from "react";
+import { Suspense } from "react";
 import { useLocation, useRoutes } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  Box,
-  CssBaseline,
-  ThemeProvider as MUIThemeProvider,
-} from "@mui/material";
-import { CacheProvider } from "@emotion/react";
-import createCache from "@emotion/cache";
-import { prefixer } from "stylis";
-import rtlPlugin from "stylis-plugin-rtl";
+import { Box } from "@mui/material";
 
 import { routes } from "@app/routes";
 import AppLayout from "@components/layout/AppLayout";
 import LoadingState from "@components/feedback/LoadingState";
-import { buildTheme } from "@theme/index";
 import { useThemeCtx } from "@providers/ThemeProvider";
-import { useTranslation } from "react-i18next";
 
 const PageTransition: React.FC<React.PropsWithChildren> = ({ children }) => (
   <motion.div
@@ -33,30 +24,27 @@ export default function App() {
   const location = useLocation();
   const element = useRoutes(routes);
 
-  const { mode, direction } = useThemeCtx();
-  const { i18n } = useTranslation();
+  const { direction } = useThemeCtx();
 
-  const cache = createCache({
-    key: direction === "rtl" ? "mui-rtl" : "mui",
-    stylisPlugins: direction === "rtl" ? [prefixer, rtlPlugin] : [prefixer],
-  });
+  const isLoginPage = location.pathname === "/login";
 
   return (
-    <CacheProvider value={cache}>
-      <MUIThemeProvider theme={buildTheme(mode, direction)}>
-        <CssBaseline />
-        <Box dir={direction}>
-          <AppLayout>
-            <Suspense fallback={<LoadingState />}>
-              <AnimatePresence mode="wait">
-                <PageTransition key={location.pathname}>
-                  {element}
-                </PageTransition>
-              </AnimatePresence>
-            </Suspense>
-          </AppLayout>
-        </Box>
-      </MUIThemeProvider>
-    </CacheProvider>
+    <Box dir={direction}>
+      {isLoginPage ? (
+        <Suspense fallback={<LoadingState />}>
+          <AnimatePresence mode="wait">
+            <PageTransition key={location.pathname}>{element}</PageTransition>
+          </AnimatePresence>
+        </Suspense>
+      ) : (
+        <AppLayout>
+          <Suspense fallback={<LoadingState />}>
+            <AnimatePresence mode="wait">
+              <PageTransition key={location.pathname}>{element}</PageTransition>
+            </AnimatePresence>
+          </Suspense>
+        </AppLayout>
+      )}
+    </Box>
   );
 }

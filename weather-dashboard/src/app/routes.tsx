@@ -11,7 +11,14 @@ function RequireAuth({ children }: { children: React.ReactNode }) {
 }
 
 export const routes = [
-  { path: "/", element: <Navigate to="/login" replace /> },
+  {
+    path: "/",
+    element: (
+      <RequireAuth>
+        <DashboardPage />
+      </RequireAuth>
+    ),
+  },
   { path: "/login", element: <LoginPage /> },
   {
     path: "/dashboard",

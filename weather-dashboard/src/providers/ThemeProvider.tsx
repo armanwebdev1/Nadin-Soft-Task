@@ -4,14 +4,16 @@ import React, {
   useState,
   useEffect,
   useContext,
+  type PropsWithChildren,
 } from "react";
 import { ThemeProvider as MUIThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { buildTheme, ColorMode } from "../theme/index";
+import { buildTheme, type ColorMode } from "../theme/index";
 import createCache from "@emotion/cache";
 import { CacheProvider } from "@emotion/react";
 import rtlPlugin from "stylis-plugin-rtl";
 import { prefixer } from "stylis";
+import { useTranslation } from "react-i18next";
 
 type ThemeCtx = {
   mode: ColorMode;
@@ -30,19 +32,29 @@ export const useThemeCtx = () => {
 const LS_MODE = "wd:mode";
 const LS_DIR = "wd:dir";
 
-export const ThemeProvider: React.FC<React.PropsWithChildren> = ({
-  children,
-}) => {
-  const [mode, setMode] = useState<ColorMode>("light");
-  const [direction, setDirection] = useState<"ltr" | "rtl">("ltr");
+export const ThemeProvider = ({ children }: PropsWithChildren) => {
+  const { i18n } = useTranslation();
 
-  useEffect(() => {
-    const m = (localStorage.getItem(LS_MODE) as ColorMode) || "light";
-    const d = (localStorage.getItem(LS_DIR) as "ltr" | "rtl") || "ltr";
-    setMode(m);
-    setDirection(d);
-    document.dir = d;
-  }, []);
+  const [mode, setMode] = useState<ColorMode>(() => {
+    try {
+      const stored = localStorage.getItem(LS_MODE) as ColorMode;
+      return stored === "light" || stored === "dark" ? stored : "light";
+    } catch {
+      return "light";
+    }
+  });
+
+  const [direction, setDirection] = useState<"ltr" | "rtl">(() => {
+    try {
+      const stored = localStorage.getItem(LS_DIR) as "ltr" | "rtl";
+      const dir = stored === "ltr" || stored === "rtl" ? stored : "ltr";
+      document.dir = dir;
+      return dir;
+    } catch {
+      document.dir = "ltr";
+      return "ltr";
+    }
+  });
 
   useEffect(() => {
     localStorage.setItem(LS_MODE, mode);
@@ -53,7 +65,10 @@ export const ThemeProvider: React.FC<React.PropsWithChildren> = ({
     document.dir = direction;
   }, [direction]);
 
-  const theme = useMemo(() => buildTheme(mode, direction), [mode, direction]);
+  const theme = useMemo(
+    () => buildTheme(mode, direction, i18n.language as "en" | "fa"),
+    [mode, direction, i18n.language]
+  );
 
   const cache = useMemo(
     () =>
