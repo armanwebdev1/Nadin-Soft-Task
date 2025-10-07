@@ -36,7 +36,7 @@ const TemperatureChart: React.FC<{ forecast: any }> = ({ forecast }) => {
       whileTap={{ scale: 0.98 }}
       elevation={0}
       sx={{
-        p: 3,
+        p: { xs: 2, sm: 2.5, md: 3 },
         borderRadius: 1.5,
         border: (t) => `1px solid ${t.palette.divider}`,
         backdropFilter: "saturate(1.25) blur(8px)",
@@ -54,6 +54,7 @@ const TemperatureChart: React.FC<{ forecast: any }> = ({ forecast }) => {
         variants={itemVariants}
         variant="h6"
         gutterBottom
+        sx={{ fontSize: { xs: "1rem", sm: "1.15rem", md: "1.25rem" } }}
       >
         {t("avgDailyTemp")}
       </Typography>

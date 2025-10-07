@@ -31,14 +31,40 @@ const TopBar: React.FC = () => {
         sx={(theme) => ({
           display: "flex",
           justifyContent: "space-between",
-          gap: 2,
+          gap: { xs: 1, sm: 2 },
           minHeight: { xs: 64, sm: 72, md: 75 },
+          px: { xs: 1.5, sm: 2, md: 3 },
         })}
       >
-        <Typography variant="h6">{t("appName")}</Typography>
+        <Typography
+          variant="h6"
+          sx={{
+            fontSize: { xs: "1rem", sm: "1.15rem", md: "1.25rem" },
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          {t("appName")}
+        </Typography>
 
-        <Stack direction="row" spacing={1.5} alignItems="center">
-          <FormControl size="small" sx={{ minWidth: 300 }}>
+        <Stack
+          direction="row"
+          spacing={{ xs: 0.5, sm: 1, md: 1.5 }}
+          alignItems="center"
+          sx={{
+            flex: { xs: 1, sm: "initial" },
+            justifyContent: "flex-end",
+            minWidth: 0,
+          }}
+        >
+          <FormControl
+            size="small"
+            sx={{
+              minWidth: { xs: 140, sm: 200, md: 300 },
+              maxWidth: { xs: "100%", sm: 300 },
+            }}
+          >
             <InputLabel>{t("searchPlace")}</InputLabel>
             <Select
               value={city}
@@ -46,6 +72,7 @@ const TopBar: React.FC = () => {
               onChange={(e) => setCity(e.target.value)}
               sx={{
                 borderRadius: 0.25,
+                fontSize: { xs: "0.875rem", sm: "1rem" },
                 backgroundColor: (theme) =>
                   theme.palette.mode === "light"
                     ? "rgba(255,255,255,0.6)"

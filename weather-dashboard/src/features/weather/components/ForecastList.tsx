@@ -122,7 +122,7 @@ const ForecastList: React.FC<ForecastListProps> = ({ forecast }) => {
       whileHover={{ y: -4, boxShadow: "0 8px 20px rgba(0,0,0,0.15)" }}
       elevation={0}
       sx={{
-        p: 3,
+        p: { xs: 2, sm: 2.5, md: 3 },
         borderRadius: 1.5,
         border: (t) => `1px solid ${t.palette.divider}`,
         backdropFilter: "saturate(1.25) blur(8px)",
@@ -132,7 +132,7 @@ const ForecastList: React.FC<ForecastListProps> = ({ forecast }) => {
             : t.palette.grey[900],
       }}
     >
-      <Stack spacing={2}>
+      <Stack spacing={{ xs: 1.5, sm: 2 }}>
         <Box
           component={motion.div}
           variants={containerVariants}
@@ -140,9 +140,16 @@ const ForecastList: React.FC<ForecastListProps> = ({ forecast }) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            flexWrap: { xs: "wrap", sm: "nowrap" },
+            gap: { xs: 1, sm: 0 },
           }}
         >
-          <Typography component={motion.p} variants={itemVariants} variant="h6">
+          <Typography
+            component={motion.p}
+            variants={itemVariants}
+            variant="h6"
+            sx={{ fontSize: { xs: "1rem", sm: "1.15rem", md: "1.25rem" } }}
+          >
             {t("fiveDaysForecast")}
           </Typography>
           <Stack direction="row" spacing={0.5}>
@@ -151,13 +158,17 @@ const ForecastList: React.FC<ForecastListProps> = ({ forecast }) => {
                 size="small"
                 onClick={() => scroll("left")}
                 sx={{
+                  minWidth: { xs: 40, sm: 44 },
+                  minHeight: { xs: 40, sm: 44 },
                   bgcolor: "action.hover",
                   "&:hover": { bgcolor: "action.selected" },
                 }}
               >
                 <ChevronLeftIcon
-                  fontSize="small"
-                  sx={{ transform: "scaleX(1)" }}
+                  sx={{
+                    fontSize: { xs: "1.2rem", sm: "1.5rem" },
+                    transform: "scaleX(1)",
+                  }}
                 />
               </IconButton>
             </motion.div>
@@ -166,13 +177,17 @@ const ForecastList: React.FC<ForecastListProps> = ({ forecast }) => {
                 size="small"
                 onClick={() => scroll("right")}
                 sx={{
+                  minWidth: { xs: 40, sm: 44 },
+                  minHeight: { xs: 40, sm: 44 },
                   bgcolor: "action.hover",
                   "&:hover": { bgcolor: "action.selected" },
                 }}
               >
                 <ChevronRightIcon
-                  fontSize="small"
-                  sx={{ transform: "scaleX(1)" }}
+                  sx={{
+                    fontSize: { xs: "1.2rem", sm: "1.5rem" },
+                    transform: "scaleX(1)",
+                  }}
                 />
               </IconButton>
             </motion.div>
@@ -185,13 +200,13 @@ const ForecastList: React.FC<ForecastListProps> = ({ forecast }) => {
           variants={containerVariants}
           sx={{
             display: "flex",
-            gap: 2,
+            gap: { xs: 1.5, sm: 2 },
             overflowX: "auto",
             overflowY: "hidden",
             scrollbarWidth: "thin",
             scrollbarColor: (t) =>
               `${t.palette.action.selected} ${t.palette.background.paper}`,
-            "&::-webkit-scrollbar": { height: 6 },
+            "&::-webkit-scrollbar": { height: { xs: 4, sm: 6 } },
             "&::-webkit-scrollbar-track": {
               bgcolor: "background.paper",
               borderRadius: 1.5,
@@ -201,7 +216,8 @@ const ForecastList: React.FC<ForecastListProps> = ({ forecast }) => {
               borderRadius: 1.5,
               "&:hover": { bgcolor: "action.active" },
             },
-            pb: 1,
+            pb: { xs: 0.5, sm: 1 },
+            WebkitOverflowScrolling: "touch",
           }}
         >
           {days.map((d, i) => (

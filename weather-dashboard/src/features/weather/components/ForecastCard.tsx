@@ -21,12 +21,12 @@ const ForecastCard: React.FC<ForecastCardProps> = ({
     animate={{ opacity: 1, scale: 1 }}
     transition={{ duration: 0.3 }}
     sx={{
-      minWidth: { xs: 100, sm: 110 },
-      maxWidth: { xs: 110, sm: 130 },
-      minHeight: { xs: 200, sm: 240 },
+      minWidth: { xs: 110, sm: 120, md: 130 },
+      maxWidth: { xs: 130, sm: 140, md: 150 },
+      minHeight: { xs: 220, sm: 240, md: 260 },
       flex: "0 0 auto",
-      py: 4,
-      px: 2,
+      py: { xs: 3, sm: 3.5, md: 4 },
+      px: { xs: 1.5, sm: 2, md: 2.5 },
       borderRadius: 1.5,
       border: (t) => `1px solid ${t.palette.divider}`,
       backgroundColor: (t) =>
@@ -35,18 +35,26 @@ const ForecastCard: React.FC<ForecastCardProps> = ({
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "space-between",
-      gap: 2,
+      gap: { xs: 1.5, sm: 2 },
       cursor: "pointer",
       transition: "all 0.25s ease-in-out",
       "&:hover": {
         boxShadow: (t) => t.shadows[4],
         borderColor: "primary.main",
+        transform: "translateY(-4px)",
+      },
+      "&:active": {
+        transform: "scale(0.98)",
       },
     }}
   >
     <Typography
       variant="subtitle1"
-      sx={{ fontWeight: 600, color: "text.primary" }}
+      sx={{
+        fontWeight: 600,
+        color: "text.primary",
+        fontSize: { xs: "0.9rem", sm: "1rem" },
+      }}
     >
       {day}
     </Typography>
@@ -60,7 +68,7 @@ const ForecastCard: React.FC<ForecastCardProps> = ({
           t.palette.mode === "light"
             ? "linear-gradient(to right, transparent, rgba(0,0,0,0.3), transparent)"
             : "linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent)",
-        my: 1,
+        my: { xs: 0.5, sm: 1 },
       }}
     />
 
@@ -68,8 +76,8 @@ const ForecastCard: React.FC<ForecastCardProps> = ({
       src={icon}
       alt={condition}
       style={{
-        width: "64px",
-        height: "64px",
+        width: "clamp(56px, 15vw, 72px)",
+        height: "clamp(56px, 15vw, 72px)",
         objectFit: "contain",
       }}
       whileHover={{
@@ -79,11 +87,25 @@ const ForecastCard: React.FC<ForecastCardProps> = ({
       }}
     />
 
-    <Typography variant="body2" sx={{ color: "text.secondary" }}>
+    <Typography
+      variant="body2"
+      sx={{
+        color: "text.secondary",
+        fontSize: { xs: "0.75rem", sm: "0.875rem" },
+        textAlign: "center",
+      }}
+    >
       {condition}
     </Typography>
 
-    <Typography variant="h5" sx={{ fontWeight: 700, color: "primary.main" }}>
+    <Typography
+      variant="h5"
+      sx={{
+        fontWeight: 700,
+        color: "primary.main",
+        fontSize: { xs: "1.25rem", sm: "1.35rem", md: "1.5rem" },
+      }}
+    >
       {Math.round(temp)}°C
     </Typography>
   </Box>
