@@ -12,7 +12,14 @@ const AppLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
       }}
     >
       <TopBar />
-      <Box sx={{ pt: 3 }}>{children}</Box>
+      <Box
+        sx={{
+          pt: { xs: 2, sm: 2.5, md: 3 },
+          px: { xs: 0, sm: 0 },
+        }}
+      >
+        {children}
+      </Box>
     </Box>
   );
 };

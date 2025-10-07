@@ -213,12 +213,6 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather }) => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          mt: { xs: 2, sm: 0 },
-          pt: { xs: 2, sm: 0 },
-          borderTop: {
-            xs: (t) => `1px solid ${t.palette.divider}`,
-            sm: "none",
-          },
         }}
       >
         <Box
