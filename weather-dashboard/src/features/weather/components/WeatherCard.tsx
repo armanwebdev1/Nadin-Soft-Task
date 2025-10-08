@@ -104,12 +104,13 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather }) => {
       whileTap={{ scale: 0.98 }}
       elevation={0}
       sx={{
-        p: 4,
+        p: { xs: 2.5, sm: 3, md: 4 },
         borderRadius: 1.5,
         border: (t) => `1px solid ${t.palette.divider}`,
         backdropFilter: "saturate(1.25) blur(8px)",
         height: "100%",
         display: "flex",
+        flexDirection: { xs: "column", sm: "row" },
         backgroundColor: (t) =>
           t.palette.mode === "light"
             ? t.palette.grey[200]
@@ -121,7 +122,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather }) => {
         variants={containerVariants}
         sx={{
           flex: 1,
-          pr: 3,
+          pr: { xs: 0, sm: 2, md: 3 },
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -147,8 +148,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather }) => {
         >
           <LocationOnIcon
             fontSize="small"
-            color="text.secondary"
-            sx={{ opacity: 0.8 }}
+            sx={{ opacity: 0.8, color: "text.secondary" }}
           />
           <Typography
             variant="subtitle1"
@@ -162,7 +162,10 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather }) => {
           component={motion.p}
           variants={itemVariants}
           variant="h4"
-          sx={{ fontWeight: 700 }}
+          sx={{
+            fontWeight: 700,
+            fontSize: { xs: "1.5rem", sm: "1.75rem", md: "2rem" },
+          }}
         >
           {dayName}
         </Typography>
@@ -171,6 +174,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather }) => {
           variants={itemVariants}
           variant="body2"
           color="text.secondary"
+          sx={{ fontSize: { xs: "0.8rem", sm: "0.875rem" } }}
         >
           {dateStr} • {timeStr}
         </Typography>
@@ -179,7 +183,12 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather }) => {
           component={motion.p}
           variants={itemVariants}
           variant="h2"
-          sx={{ fontWeight: 700, lineHeight: 1, mt: 2 }}
+          sx={{
+            fontWeight: 700,
+            lineHeight: 1,
+            mt: { xs: 1.5, sm: 2 },
+            fontSize: { xs: "2.5rem", sm: "3rem", md: "3.75rem" },
+          }}
         >
           {Math.round(weather.main.temp)}°C
         </Typography>
@@ -188,6 +197,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather }) => {
           variants={itemVariants}
           variant="body2"
           color="text.secondary"
+          sx={{ fontSize: { xs: "0.8rem", sm: "0.875rem" } }}
         >
           {t("weather:high")}: {Math.round(weather.main.temp_max)} •{" "}
           {t("weather:low")}: {Math.round(weather.main.temp_min)}
@@ -198,11 +208,14 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather }) => {
         component={motion.div}
         variants={containerVariants}
         sx={{
-          flexBasis: "40%",
+          flexBasis: { xs: "auto", sm: "40%" },
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
+          mt: { xs: 2, sm: 0 },
+          pt: { xs: 2, sm: 0 },
+          borderTop: { xs: (t) => `1px solid ${t.palette.divider}`, sm: "none" },
         }}
       >
         <Box
@@ -211,13 +224,20 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather }) => {
           src={iconMap[condition] ?? SunnyRainIcon}
           alt={localizedDescription}
           whileHover={{ scale: 1.1, rotate: 3 }}
-          sx={{ width: 96, height: 96, mb: 1 }}
+          sx={{
+            width: { xs: 72, sm: 80, md: 96 },
+            height: { xs: 72, sm: 80, md: 96 },
+            mb: 1,
+          }}
         />
         <Typography
           component={motion.p}
           variants={itemVariants}
           variant="h5"
-          sx={{ textTransform: "capitalize" }}
+          sx={{
+            textTransform: "capitalize",
+            fontSize: { xs: "1.1rem", sm: "1.25rem", md: "1.5rem" },
+          }}
         >
           {localizedDescription}
         </Typography>
@@ -226,6 +246,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather }) => {
           variants={itemVariants}
           variant="body2"
           color="text.secondary"
+          sx={{ fontSize: { xs: "0.8rem", sm: "0.875rem" } }}
         >
           {t("weather:feelsLike")} {Math.round(weather.main.feels_like)}°C
         </Typography>

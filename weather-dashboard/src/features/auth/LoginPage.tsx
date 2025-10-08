@@ -70,8 +70,8 @@ const LoginPage: React.FC = () => {
           alignItems: "stretch",
           justifyContent: "space-between",
           width: "100%",
-          maxWidth: 1000,
-          borderRadius: 2,
+          maxWidth: { xs: "95%", sm: "90%", md: 1000 },
+          borderRadius: { xs: 1.5, sm: 2 },
           backgroundColor: theme.palette.background.paper,
           boxShadow: theme.shadows[6],
           overflow: "hidden",
@@ -81,11 +81,11 @@ const LoginPage: React.FC = () => {
           sx={{
             flex: 1,
             textAlign: "left",
-            p: { xs: 3, sm: 4, md: 6 },
+            p: { xs: 2.5, sm: 3.5, md: 5, lg: 6 },
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            gap: 2,
+            gap: { xs: 1.5, sm: 2 },
             minWidth: 0,
           }}
         >
@@ -204,7 +204,7 @@ const LoginPage: React.FC = () => {
           sx={{
             display: { xs: "none", md: "block" },
             flex: "0 0 45%",
-            maxWidth: { md: 450, lg: 500 },
+            maxWidth: { md: 400, lg: 500 },
             width: "100%",
             height: "100%",
             objectFit: "cover",
@@ -217,13 +217,14 @@ const LoginPage: React.FC = () => {
       <Box
         sx={{
           width: "100%",
-          maxWidth: 1000,
+          maxWidth: { xs: "95%", sm: "90%", md: 1000 },
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          gap: 2,
-          mt: { xs: 8, sm: 3 },
-          px: { xs: 2, sm: 0 },
+          gap: { xs: 1.5, sm: 2 },
+          mt: { xs: 3, sm: 3, md: 3 },
+          px: { xs: 1, sm: 2, md: 0 },
+          flexWrap: "wrap",
         }}
       >
         <LanguageToggle variant="dropdown" />
